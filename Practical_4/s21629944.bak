@@ -1,0 +1,44 @@
+#lang sicp
+
+
+(define (stripNegativesDuplicateEvens theList)
+
+  (define (helper theList output)
+    (cond ( (null? theList) output)                                                                                                                   ;checks whether the list is empty
+          ((and (positive? (car theList)) (even? (car theList)) ) (helper (cdr theList) (cons (car theList) (cons (car theList) output) ) ) )        ;checks whether the value is both positive and even
+          ((positive? (car theList)) (helper (cdr theList) (cons (car theList) output) )) ; if it is positive we just add it to the building process but do not duplicate
+          (else (helper (cdr theList) output )) ; if the value is negative we just repeat the building process but leave out that value
+      )
+   )
+
+  
+  (define (reverseList theList)
+    (define (reverseHelp theList output2)
+      (if (null? theList)
+          output2
+          (reverseHelp (cdr theList) (cons (car theList) output2))
+      )
+     )
+    
+    (reverseHelp theList '())
+   )
+
+  (reverseList(helper theList '()) )
+  
+ )
+
+(display (stripNegativesDuplicateEvens '())) ; Output: ()
+(newline)
+
+
+(display (stripNegativesDuplicateEvens '(-1 -2 -3))) ; Output: ()
+(newline)
+
+(display (stripNegativesDuplicateEvens '(1 3 7)))
+(newline)
+
+(display (stripNegativesDuplicateEvens '(2 4 6)))
+(newline)
+
+(display (stripNegativesDuplicateEvens '(1 2 -2 3 -3 4 5 -6 0))) ; Output: (1 2 2 3 4 4 5)
+(newline)
