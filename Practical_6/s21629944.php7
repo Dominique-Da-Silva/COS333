@@ -1,0 +1,43 @@
+#!/usr/bin/php
+
+<?php
+// Check that the correct info is passed via the command line
+if ($argc != 3) {
+    echo "Usage: php s21629944.php input.txt <search_word>\n";
+    exit(1);
+}
+
+$input_file = $argv[1]; // get file name from the command line
+$input_string = file_get_contents($input_file);
+$html_output = "<html> \n";
+$html_output .= "<head><title> u21629944 php </title></head> \n";
+$html_output .= "<body> \n";
+$html_output .= "<h1> PRACTICAL 6 </h1> \n";
+
+// changing the string to get rid of any non alphanumerical characters and make it lowercase
+$converted_string = preg_replace('/[^a-zA-Z]/', '', strtolower($input_string));
+$html_output .= "<p> Original string: $input_string </p>\n";
+$html_output .= "<p> Converted string: $converted_string </p>\n";
+
+//get the word that we want to search for from the command line
+$word_to_find = strtolower($argv[2]); 
+$html_output .= "<p> Search word: $word_to_find </p>\n";
+$converted_string = strrev($converted_string);
+$html_output .= "<p> Converted string reversed: $converted_string </p>\n";
+
+// Count the occurrences of the search word in the converted string
+$number_matches = substr_count($converted_string, $word_to_find);
+
+// Output the result
+// Print the number of matches found
+$html_output .= "<p> Matches: $number_matches </p>\n";
+$html_output .= "</body> \n";
+$html_output .= "</html> \n";
+echo $html_output;
+
+// To be able to run the script and create an html file
+// php s21629944.php7 input.txt mad > outputPHP.html
+
+// Instructions to be able to run php wsl
+// https://help.scriptcase.net/portal/en/kb/articles/installing-php-7-0-linux#Setting_Up_PHP_-_Ubuntu
+?>
