@@ -1,0 +1,49 @@
+%!PS-Adobe-3.0
+
+/radius 20 def
+/big_circle_radius 120 def
+/fillColor {0.8 0.3 0.2} def
+/lineColor {0 0 0} def
+/circle_count 8 def
+/pi 3.141592653 def
+
+% INITIAL X COORDINATE FOR THE CENTER CIRCLES
+/x_center 300 def
+% INITIAL Y COORDINATE FOR THE CENTER CIRCLES
+/y_center 400 def
+
+
+% CALCULATE THE ANGLE STEP
+360 circle_count div /angle_step exch def
+
+
+% COUNTER FOR LOOP STRUCTURE
+/counter 0 def
+
+% LOOP TO DRAW 6 CIRCLES
+0 angle_step 360{
+	/angle_deg exch def
+	
+	%CALCULATE COORDINATES FOR CURRENT CIRCLE
+	angle_deg cos big_circle_radius mul x_center add /x_center exch def
+	angle_deg sin big_circle_radius mul y_center add /y_center exch def
+	
+	
+	/counter counter 1 add def
+	
+	% CHECK FOR ODD INDEX THEN FILL CIRCLE
+	counter 2 mod 0 eq{
+		% FILL CIRCLES
+		x_center y_center radius 0 360 arc
+		fillColor setrgbcolor
+		fill
+	}{
+		% DRAW CIRCLES
+		x_center y_center radius 0 360 arc
+		lineColor setrgbcolor
+		stroke
+	} ifelse
+}for
+
+% DISPLAY
+showpage
